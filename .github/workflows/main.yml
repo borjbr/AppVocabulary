@@ -1,33 +1,31 @@
-name: Deploy to FTP
+name: Deploy to SFTP
 
 on:
   push:
     branches:
-      - dev
+      - dev  # Esto activará el deploy solo cuando hagas un push en la rama "dev"
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Usamos un entorno Ubuntu para ejecutar el job
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3
+      uses: actions/checkout@v3  # Clona el repositorio
 
-    - name: Deploy to server using SFTP
-      uses: appleboy/ssh-action@v0.1.0
+    - name: Set up SSH key
+      uses: webfactory/ssh-agent@v0.5.3
       with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.SSH_KEY }}  # Revisa que este secreto esté correctamente configurado
-        port: 22
-        sync: true
-        source: "./public/"
-        target: "/html/prueba/"
-        use_insecure_cipher: false
-        timeout: "30s"
-        command_timeout: "10m"
-        proxy_port: 22
-        proxy_timeout: "30s"
-        proxy_use_insecure_cipher: false
-        script_stop: false
-        debug: true
+        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}  # Usamos una variable de entorno para la clave SSH privada
+
+    - name: Deploy to SFTP
+      run: |
+        # Usamos lftp para conectarnos al servidor SFTP y hacer el upload
+        sudo apt-get install lftp -y  # Instalamos lftp, necesario para la conexión SFTP
+
+        # Comando lftp para sincronizar la carpeta 'public' con el servidor SFTP
+        lftp -f "
+          open -u ${{ secrets.SFTP_USER }},$${{ secrets.SFTP_PASSWORD }} sftp://$${{ secrets.SFTP_HOST }}
+          mirror -R ./public /html/prueba
+          quit
+        "
