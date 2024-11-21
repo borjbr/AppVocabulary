@@ -20,6 +20,6 @@ jobs:
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
         local-dir: ./public/
-        server-dir: /html/prueba
+        server-dir: /html/prueba/
         method: ftp
         overwrite: true  # Sobrescribe archivos existentes
