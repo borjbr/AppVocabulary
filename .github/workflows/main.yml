@@ -14,13 +14,12 @@ jobs:
       uses: actions/checkout@v3  # Clona el repositorio
 
     - name: Deploy to SFTP
-      uses: appleboy/ssh-action@v0.1.8  # Acción para usar SFTP
+      uses: appleboy/scp-action@v0.1.1  # Acción para realizar transferencias SFTP
       with:
         host: ${{ secrets.SFTP_HOST }}  # Dirección del servidor
         username: ${{ secrets.SFTP_USER }}  # Usuario para autenticación
         password: ${{ secrets.SFTP_PASSWORD }}  # Contraseña del usuario (si usas contraseña)
         port: 22  # Puerto SFTP (por defecto es 22)
-        source: "./public/"  # Carpeta local que quieres subir
-        target: "./html/prueba/"  # Carpeta destino en el servidor
+        source: "public/*"  # Carpeta local que quieres subir
+        target: "/html/prueba/"  # Carpeta destino en el servidor
         private_key: ${{ secrets.SSH_PRIVATE_KEY }}  # Usa la clave privada SSH si no usas contraseña
-        protocol: sftp  # Asegura que se use SFTP
