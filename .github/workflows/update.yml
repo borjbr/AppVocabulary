@@ -19,6 +19,6 @@ jobs:
         server: 217.76.156.104        # Solo la IP o dominio, sin 'ftp://' o 'sftp://'
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        local-dir: ./public
-        server-dir: /path/to/remote/folder/  # Asegúrate de que esta ruta exista en el servidor
+        local-dir: ./public/
+        server-dir: /html/prueba/  # Asegúrate de que esta ruta exista en el servidor
         overwrite: true  # Sobrescribe archivos existentes
