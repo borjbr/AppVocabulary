@@ -19,6 +19,6 @@ jobs:
           mkdir -p ~/.ssh
           echo "$PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          sftp -o StrictHostKeyChecking=no -P 22 -i ~/.ssh/id_rsa username@host:/var/www/html/prueba/ <<< $'put ./public/*'
+          sftp -o StrictHostKeyChecking=no -P 22 -i ~/.ssh/id_rsa galernasite.com@217.76.156.104:/var/www/html/prueba/ <<< $'put ./public/*'
         env:
           PRIVATE_KEY: ${{ secrets.SFTP_PRIVATE_KEY }}
