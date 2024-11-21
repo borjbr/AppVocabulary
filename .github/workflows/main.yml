@@ -20,7 +20,7 @@ jobs:
         username: ${{ secrets.SFTP_USER }}
         password: ${{ secrets.SFTP_PASSWORD }}
         port: 22
-        source: "./public/"
-        target: "./html/prueba/"
+        source: "./public/*"
+        target: "/html/prueba/"
         private_key: ${{ secrets.SSH_PRIVATE_KEY }}
         debug: true  # Activa la opción de debug
