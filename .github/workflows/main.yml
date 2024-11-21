@@ -13,14 +13,13 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Deploy to SFTP
-      uses: appleboy/scp-action@v0.1.1
+    - name: Upload files using SFTP
+      uses: appleboy/sftp-action@v0.1.0
       with:
         host: ${{ secrets.SFTP_HOST }}
         username: ${{ secrets.SFTP_USER }}
         password: ${{ secrets.SFTP_PASSWORD }}
         port: 22
         source: "./public/*"
-        target: "./var/www/html/prueba/"
-        private_key: ${{ secrets.SSH_PRIVATE_KEY }}
-        debug: false  # Activa la opción de debug
+        target: "/var/www/html/prueba/"
+
