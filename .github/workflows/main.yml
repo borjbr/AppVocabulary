@@ -22,3 +22,4 @@ jobs:
           sftp -o StrictHostKeyChecking=no -P 22 -i ~/.ssh/id_rsa galernasite.com@217.76.156.104:/var/www/html/prueba/ <<< $'put ./public/*'
         env:
           PRIVATE_KEY: ${{ secrets.SFTP_PRIVATE_KEY }}
+          
