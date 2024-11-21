@@ -1,0 +1,24 @@
+name: Deploy to FTP
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Upload via FTP
+      uses: SamKirkland/FTP-Deploy-Action@4.3.0
+      with:
+        server: 217.76.156.104        # Solo la IP o dominio, sin 'ftp://' o 'sftp://'
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        local-dir: ./public
+        server-dir: /path/to/remote/folder/  # Asegúrate de que esta ruta exista en el servidor
+        overwrite: true  # Sobrescribe archivos existentes
