@@ -20,5 +20,6 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSH_KEY }}
         port: 22
+        sync: true
         source: "./public/"
         target: "/html/prueba/"
