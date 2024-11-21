@@ -3,23 +3,24 @@ name: Deploy to SFTP
 on:
   push:
     branches:
-      - dev  # Esto activará el deploy solo cuando hagas un push en la rama "dev"
+      - dev
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest  # Usamos un entorno Ubuntu para ejecutar el job
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v3  # Clona el repositorio
+      uses: actions/checkout@v3
 
     - name: Deploy to SFTP
-      uses: appleboy/scp-action@v0.1.1  # Acción para realizar transferencias SFTP
+      uses: appleboy/scp-action@v0.1.1
       with:
-        host: ${{ secrets.SFTP_HOST }}  # Dirección del servidor
-        username: ${{ secrets.SFTP_USER }}  # Usuario para autenticación
-        password: ${{ secrets.SFTP_PASSWORD }}  # Contraseña del usuario (si usas contraseña)
-        port: 22  # Puerto SFTP (por defecto es 22)
-        source: "public/*"  # Carpeta local que quieres subir
-        target: "/html/prueba/"  # Carpeta destino en el servidor
-        private_key: ${{ secrets.SSH_PRIVATE_KEY }}  # Usa la clave privada SSH si no usas contraseña
+        host: ${{ secrets.SFTP_HOST }}
+        username: ${{ secrets.SFTP_USER }}
+        password: ${{ secrets.SFTP_PASSWORD }}
+        port: 22
+        source: "./public/"
+        target: "./html/prueba/"
+        private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+        debug: true  # Activa la opción de debug
