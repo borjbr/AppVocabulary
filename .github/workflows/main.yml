@@ -26,6 +26,6 @@ jobs:
         # Comando lftp para sincronizar la carpeta 'public' con el servidor SFTP
         lftp -f "
           open -u ${{ secrets.SFTP_USER }},$${{ secrets.SFTP_PASSWORD }} sftp://$${{ secrets.SFTP_HOST }}
-          mirror -R ./public /html/prueba
+          mirror -R ./public/ /html/prueba/
           quit
         "
