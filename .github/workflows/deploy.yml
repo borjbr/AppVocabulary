@@ -19,12 +19,12 @@ jobs:
         npm run build
 
 
-    - name: Deploy to SFTP
-      uses: appleboy/scp-action@v0.1.2
+    - name: Copy files to SFTP server
+      uses: appleboy/sftp-action@v0.1.0
       with:
         host: ${{ secrets.SFTP_HOST }}
-        username: ${{ secrets.SFTP_USERNAME }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        username: ${{ secrets.SFTP_USER }}
+        password: ${{ secrets.SFTP_PASSWORD }}
         port: 22
-        source: ./build/
-        target: /html/prueba/
+        source: "build/*"  # Copia todos los archivos de la carpeta build
+        target: "/html/prueba/"
