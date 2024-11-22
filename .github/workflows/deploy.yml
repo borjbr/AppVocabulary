@@ -11,22 +11,16 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v2
 
     - name: Install dependencies and build
       run: |
         npm install
         npm run build
 
-    - name: Verify SFTP Connection
-      run: |
-        sshpass -p "${{ secrets.SFTP_PASSWORD }}" sftp -o StrictHostKeyChecking=no ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }} <<EOF
-        ls
-        bye
-        EOF
 
     - name: Deploy to SFTP
-      uses: appleboy/scp-action@v0.1.7
+      uses: appleboy/scp-action@master
       with:
         host: ${{ secrets.SFTP_HOST }}
         username: ${{ secrets.SFTP_USERNAME }}
@@ -34,3 +28,6 @@ jobs:
         port: 22
         source: ./build/
         target: /html/prueba/
+        script: |
+          chown -R openvc:www-data /html/prueba/
+          chmod -R 770 /html/prueba/`
