@@ -20,21 +20,17 @@ jobs:
 
     - name: Verify SFTP Connection
       run: |
-        sshpass -p "${{ secrets.SFTP_PASSWORD }}" sftp -o StrictHostKeyChecking=no ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }} <<EOF
+        sshpass -p "${{ secrets.SFTP_PASSWORD }}" sftp -o StrictHostKeyChecking=no ${{ secrets.SFTP_USERNAME }}@${{ secrets.SFTP_HOST }} <<EOF
         ls
         bye
         EOF
-      env:
-        SSHPASS: ${{ secrets.SFTP_PASSWORD }}
 
     - name: Deploy to SFTP
       uses: appleboy/scp-action@v0.1.7
       with:
         host: ${{ secrets.SFTP_HOST }}
-        username: ${{ secrets.SFTP_USER }}
+        username: ${{ secrets.SFTP_USERNAME }}
         password: ${{ secrets.SFTP_PASSWORD }}
         port: 22 # Cambia si usas otro puerto
         source: ./build/
-        target: /www/html/
-
-        
+        target: /html/prueba/
