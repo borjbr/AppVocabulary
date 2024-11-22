@@ -13,12 +13,6 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Install dependencies and build
-      run: |
-        npm install
-        npm run build
-
-
     - name: Deploy to SFTP
       uses: appleboy/scp-action@master
       with:
@@ -28,6 +22,3 @@ jobs:
         port: 22
         source: ./build/
         target: /html/prueba/
-        script: |
-          chown -R openvc:www-data /html/prueba/
-          chmod -R 770 /html/prueba/`
