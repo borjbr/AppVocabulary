@@ -18,11 +18,18 @@ jobs:
         npm install
         npm run build
 
+    - name: Verify SFTP Connection
+      run: |
+        sshpass -p "${{ secrets.SFTP_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }} "echo 'SFTP Connection Successful'"
+      env:
+        SSHPASS: ${{ secrets.SFTP_PASSWORD }}
+
     - name: Deploy to SFTP
       uses: appleboy/scp-action@v0.1.7
       with:
         host: ${{ secrets.SFTP_HOST }}
         username: ${{ secrets.SFTP_USER }}
         password: ${{ secrets.SFTP_PASSWORD }}
+        port: 22 # Cambia si usas otro puerto
         source: ./build/
-        target: /var/www/html/prueba/
+        target: /html/prueba/
