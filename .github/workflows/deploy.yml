@@ -20,7 +20,7 @@ jobs:
 
 
     - name: Copy files to SFTP server
-      uses: appleboy/sftp-action@v0.1.0
+      uses: appleboy/scp-action@master
       with:
         host: ${{ secrets.SFTP_HOST }}
         username: ${{ secrets.SFTP_USER }}
