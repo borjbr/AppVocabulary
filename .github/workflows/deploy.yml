@@ -19,7 +19,7 @@ jobs:
         npm run build
 
     - name: Deploy to SFTP
-      uses: appleboy/scp-action@v0.2.0
+      uses: appleboy/scp-action@v0.1.7
       with:
         host: ${{ secrets.SFTP_HOST }}
         username: ${{ secrets.SFTP_USERNAME }}
