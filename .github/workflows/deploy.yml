@@ -20,7 +20,10 @@ jobs:
 
     - name: Verify SFTP Connection
       run: |
-        sshpass -p "${{ secrets.SFTP_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }} "echo 'SFTP Connection Successful'"
+        sshpass -p "${{ secrets.SFTP_PASSWORD }}" sftp -o StrictHostKeyChecking=no ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }} <<EOF
+        ls
+        bye
+        EOF
       env:
         SSHPASS: ${{ secrets.SFTP_PASSWORD }}
 
@@ -33,3 +36,5 @@ jobs:
         port: 22 # Cambia si usas otro puerto
         source: ./build/
         target: /html/prueba/
+
+        
