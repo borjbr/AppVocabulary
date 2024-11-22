@@ -30,7 +30,7 @@ jobs:
       with:
         host: ${{ secrets.SFTP_HOST }}
         username: ${{ secrets.SFTP_USERNAME }}
-        key: ${{ secrets.SFTP_PRIVATE_KEY }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 22 # Cambia si usas otro puerto
         source: ./build/
         target: /html/prueba/
