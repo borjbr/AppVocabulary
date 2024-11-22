@@ -4,7 +4,7 @@ name: CI-SFTP
 on:
   # Activa el workflow en eventos push o pull request pero sólo para la rama que elijas.
   push:
-    branches: [ main ]
+    branches: [ dev ]
  # pull_request:
    # branches: [ main ]
  
