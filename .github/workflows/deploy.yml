@@ -1,30 +1,39 @@
-name: Deploy React App to SFTP
-
+name: CI-SFTP
+ 
+# Controla cuándo se ejecutará la acción.
 on:
+  # Activa el workflow en eventos push o pull request pero sólo para la rama que elijas.
   push:
-    branches:
-      - dev
-
+    branches: [ main ]
+ # pull_request:
+   # branches: [ main ]
+ 
+  # workflow_dispatch: Le permite ejecutar este workflow manualmente desde la pestaña Acciones.
+  workflow_dispatch:
+ 
+# Un workflow se compone de uno o varios jobs que pueden ejecutarse de forma secuencial o en paralelo.
 jobs:
-  deploy:
+  # Este workflow contiene un solo job llamado "SFTP".
+  deploy-via-sftp:
     runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - uses: actions/checkout@v2
+      
+      - name: SFTP Deploy
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.1
+        with:
+          # username: Nombre de usuario con el cual nos conectaremos al servidor.
+          username: galernasite.com
+          # server: Nombre del servidor o IP.
+          server: 217.76.156.104
+          port: 22 
+          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-    - name: Install dependencies and build
-      run: |
-        npm install
-        npm run build
-
-
-    - name: Copy files to SFTP server
-      uses: appleboy/scp-action@v0.1.2
-      with:
-        host: ${{ secrets.SFTP_HOST }}
-        username: ${{ secrets.SFTP_USER }}
-        password: ${{ secrets.SFTP_PASSWORD }}
-        port: 22
-        source: "build/*"  # Copia todos los archivos de la carpeta build
-        target: "/html/prueba/"
+          # local_path: Ruta dentro del repositorio la cual quieres copiar en el servidor,por defecto es ./*
+          local_path: ./public/*
+          
+          # remote_path: Ruta remota donde se copiaran los archivos del repositorio.
+          remote_path: /var/www/galernasite.com/prueba/
+          
+          # SFTP args
+          args: '-o ConnectTimeout=5'
