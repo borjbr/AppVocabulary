@@ -20,7 +20,7 @@ jobs:
 
     - name: Verify SFTP Connection
       run: |
-        sshpass -p "${{ secrets.SFTP_PASSWORD }}" sftp -o StrictHostKeyChecking=no ${{ secrets.SFTP_USERNAME }}@${{ secrets.SFTP_HOST }} <<EOF
+        sshpass -p "${{ secrets.SFTP_PASSWORD }}" sftp -o StrictHostKeyChecking=no ${{ secrets.SFTP_USER }}@${{ secrets.SFTP_HOST }} <<EOF
         ls
         bye
         EOF
