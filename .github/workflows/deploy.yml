@@ -1,0 +1,28 @@
+name: Deploy React App to SFTP
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install dependencies and build
+      run: |
+        npm install
+        npm run build
+
+    - name: Deploy to SFTP
+      uses: appleboy/scp-action@v0.2.0
+      with:
+        host: ${{ secrets.SFTP_HOST }}
+        username: ${{ secrets.SFTP_USERNAME }}
+        password: ${{ secrets.SFTP_PASSWORD }}
+        source: ./build/
+        target: /var/www/html/prueba/
